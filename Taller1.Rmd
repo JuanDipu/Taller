@@ -62,7 +62,8 @@ modelo_ridge <- glmnet(x, y, alpha = 0, lambda = lambda_r)
 modelo_lasso <- glmnet(x, y, alpha = 1, lambda = lambda_l)
 ```
 
-5) Para los modelos ajustados en (4) determine el más apropiado para propósitos de predicción. Considere unicamente el ECM en los 200 datos de prueba para su decisión. Seleccionar el mejor modelo
+5)  Para los modelos ajustados en (4) determine el más apropiado para propósitos de predicción. Considere unicamente el ECM en los 200 datos de prueba para su decisión. Seleccionar el mejor modelo
+
 ```{r setup, include=FALSE}
 x_prueba <- model.matrix(y ~ ., data = df_prueba)[,-1]
 y_prueba <- df_prueba$y
@@ -72,3 +73,5 @@ ECM_ridge <- mean((y_prueba - predicciones_ridge)^2)
 ECM_lasso <- mean((y_prueba - predicciones_lasso)^2)
 mejor_modelo <- ifelse(ECM_ridge < ECM_lasso, "Ridge", "Lasso")
 ```
+
+6) Ajuste el modelo seleccionado en (5) para los 1200 datos. Note que en este punto ya tiene un λ estimado y un modelo seleccionado.
