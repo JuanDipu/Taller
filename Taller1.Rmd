@@ -40,7 +40,7 @@ df_entrenamiento <- df[indices, ]
 df_prueba <- df[-indices, ]
 ```
 
-3) Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadr´atico medio (ECM) mediante validación externa. Utilice el método de validación externa que considere más apropiado.
+3)  Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadr´atico medio (ECM) mediante validación externa. Utilice el método de validación externa que considere más apropiado.
 
 ```{r setup, include=FALSE}
 # Determinar λr y λl
@@ -58,4 +58,15 @@ lambda_l <- cv_lasso$lambda.min
 # Ajustar los modelos
 modelo_ridge <- glmnet(x, y, alpha = 0, lambda = lambda_r)
 modelo_lasso <- glmnet(x, y, alpha = 1, lambda = lambda_l)
+```
+
+5) Para los modelos ajustados en (4) determine el más apropiado para propósitos de predicción. Considere unicamente el ECM en los 200 datos de prueba para su decisión. Seleccionar el mejor modelo
+```{r setup, include=FALSE}
+x_prueba <- model.matrix(y ~ ., data = df_prueba)[,-1]
+y_prueba <- df_prueba$y
+predicciones_ridge <- predict(modelo_ridge, s = lambda_r, newx = x_prueba)
+predicciones_lasso <- predict(modelo_lasso, s = lambda_l, newx = x_prueba)
+ECM_ridge <- mean((y_prueba - predicciones_ridge)^2)
+ECM_lasso <- mean((y_prueba - predicciones_lasso)^2)
+mejor_modelo <- ifelse(ECM_ridge < ECM_lasso, "Ridge", "Lasso")
 ```
