@@ -302,3 +302,7 @@ TSWLatexianTemp*
 
 # Ignora todos los archivos de texto
 *.txt
+
+# Session Data files
+.RData
+.RDataTmp
