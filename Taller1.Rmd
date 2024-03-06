@@ -40,4 +40,14 @@ df_entrenamiento <- df[indices, ]
 df_prueba <- df[-indices, ]
 ```
 
-3) Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadr´atico medio (ECM) mediante validación externa. Utilice el m´etodo de validación externa que considere más apropiado.
+3) Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadr´atico medio (ECM) mediante validación externa. Utilice el método de validación externa que considere más apropiado.
+
+```{r setup, include=FALSE}
+# Determinar λr y λl
+x <- model.matrix(y ~ ., data = df_entrenamiento)[,-1]
+y <- df_entrenamiento$y
+cv_ridge <- cv.glmnet(x, y, alpha = 0)
+cv_lasso <- cv.glmnet(x, y, alpha = 1)
+lambda_r <- cv_ridge$lambda.min
+lambda_l <- cv_lasso$lambda.min
+```
