@@ -397,9 +397,9 @@ cv_ridge &lt;- cv.glmnet(x, y, alpha = 0)
 cv_lasso &lt;- cv.glmnet(x, y, alpha = 1)
 lambda_r &lt;- cv_ridge$lambda.min
 lambda_l &lt;- cv_lasso$lambda.min
-print(lambda_r)</code></pre>
+lambda_r</code></pre>
 <pre><code>## [1] 11.68908</code></pre>
-<pre class="r"><code>print(lambda_l)</code></pre>
+<pre class="r"><code>lambda_l</code></pre>
 <pre><code>## [1] 0.0623811</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Ajuste la regresión ridge y lasso con los valores estimados de λr y

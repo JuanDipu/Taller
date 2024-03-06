@@ -32,7 +32,7 @@ modelo <- lm(y ~ ., data = df)
 
 El error en R al calcular el VIF (Variance Inflation Factor) indica que hay coeficientes aliased (coeficientes aliados) en el modelo de regresión. La multicolinealidad perfecta entre variables predictoras puede resultar en coeficientes aliased, lo que causa problemas en cálculos como el VIF.
 
-Nota: Al momento de generar el archivo en HTML, se tiene que comentar el código para calcular el "variance Inflation Factor), de no ser así no permite la generación del archivo. 
+Nota: Al momento de generar el archivo en HTML, se tiene que comentar el código para calcular el "variance Inflation Factor", de no ser así no permite la generación del archivo. 
 
 2. Separe aleatoriamente (pero guarde la semilla) su conjunto de datos en dos partes.
 
@@ -55,8 +55,8 @@ cv_ridge <- cv.glmnet(x, y, alpha = 0)
 cv_lasso <- cv.glmnet(x, y, alpha = 1)
 lambda_r <- cv_ridge$lambda.min
 lambda_l <- cv_lasso$lambda.min
-print(lambda_r)
-print(lambda_l)
+lambda_r
+lambda_l
 ```
 
 4. Ajuste la regresión ridge y lasso con los valores estimados de λr y λl obtenidos en (3) usando los 1000 datos de entrenamiento.
