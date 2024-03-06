@@ -6,9 +6,16 @@ date: "2024-03-06"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+install.packages(c("car", "glmnet", "caret"))
+library(car)
+library(glmnet)
+library(caret)
+
+df <- read.csv("C:/Users/Juan Diego Pulido R/Desktop/Juan Diego/2024-1/Maestría/Análisis de datos/taller1.txt")
 ```
 
-## Taller 1 
+## Taller 1
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
