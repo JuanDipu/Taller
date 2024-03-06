@@ -32,7 +32,9 @@ modelo <- lm(y ~ ., data = df)
 
 El error en R al calcular el VIF (Variance Inflation Factor) indica que hay coeficientes aliased (coeficientes aliados) en el modelo de regresión. La multicolinealidad perfecta entre variables predictoras puede resultar en coeficientes aliased, lo que causa problemas en cálculos como el VIF.
 
-2. Separe aleatoriamente (pero guarde la semilla) su conjunto de datos en dos partes
+Nota: Al momento de generar el archivo en HTML, se tiene que comentar el código de  
+
+2. Separe aleatoriamente (pero guarde la semilla) su conjunto de datos en dos partes.
 
 Dividir los df
 
@@ -88,5 +90,19 @@ if (mejor_modelo == "Ridge") {
 } else {
   modelo_final <- glmnet(x_todos, y_todos, alpha = 1, lambda = lambda_l)
 }
-print(modelo_final)
+
+
+```
+
+```{r gráfica, include=TRUE}
+# Graficar las trazas de los coeficientes
+plot(modelo_final, xvar = "lambda", label = TRUE)
+
+```
+
+```{r resultados, include=TRUE}
+# Resumen de los resultados
+cat("El mejor modelo para predecir la efectividad del tratamiento anticancerígeno es", mejor_modelo, "con un ECM de", ifelse(mejor_modelo == "Ridge", ECM_ridge, ECM_lasso), "en los df de prueba.")
+
+
 ```
