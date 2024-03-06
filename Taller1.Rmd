@@ -51,3 +51,11 @@ cv_lasso <- cv.glmnet(x, y, alpha = 1)
 lambda_r <- cv_ridge$lambda.min
 lambda_l <- cv_lasso$lambda.min
 ```
+
+(4) Ajuste la regresión ridge y lasso con los valores estimados de λr y λl obtenidos en (3) usando los 1000 datos de entrenamiento.
+
+```{r setup, include=FALSE}
+# Ajustar los modelos
+modelo_ridge <- glmnet(x, y, alpha = 0, lambda = lambda_r)
+modelo_lasso <- glmnet(x, y, alpha = 1, lambda = lambda_l)
+```
