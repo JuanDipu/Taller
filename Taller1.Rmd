@@ -32,12 +32,7 @@ modelo <- lm(y ~ ., data = df)
 #print(vif_df)
 ```
 
-```{r correlacion, include=TRUE}
-corr<-cor(df,method = "pearson")
-correlacion<-round(corr,digits =  2)
-correlacion
 
-```
 
 El error en R al calcular el VIF (Variance Inflation Factor) indica que hay coeficientes aliased (coeficientes aliados) en el modelo de regresión. La multicolinealidad perfecta entre variables predictoras puede resultar en coeficientes aliased, lo que causa problemas en cálculos como el VIF.
 
