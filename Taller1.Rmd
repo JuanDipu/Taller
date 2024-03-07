@@ -13,14 +13,16 @@ knitr::opts_chunk$set(echo = TRUE)
 library(car)
 library(glmnet)
 library(caret)
+library(corrplot)
+df <- read.csv("C:/Users/Juan Diego Pulido R/Desktop/Juan Diego/2024-1/Maestría/Análisis de datos/Taller/taller1.txt")
 
-df <- read.csv("C:/Users/Juan Diego Pulido R/Desktop/Juan Diego/2024-1/Maestría/Análisis de datos/taller1.txt")
 ```
 
 ### Jossie Esteban Molina P
-### Juan Diego Pulido R 
 
-1. ¿Hay multicolinealidad en los datos? Explique sucintamente.
+### Juan Diego Pulido R
+
+1.  ¿Hay multicolinealidad en los datos? Explique sucintamente.
 
 Verificar la multicolinealidad
 
@@ -30,11 +32,18 @@ modelo <- lm(y ~ ., data = df)
 #print(vif_df)
 ```
 
+```{r correlacion, include=TRUE}
+corr<-cor(df,method = "pearson")
+correlacion<-round(corr,digits =  2)
+correlacion
+
+```
+
 El error en R al calcular el VIF (Variance Inflation Factor) indica que hay coeficientes aliased (coeficientes aliados) en el modelo de regresión. La multicolinealidad perfecta entre variables predictoras puede resultar en coeficientes aliased, lo que causa problemas en cálculos como el VIF.
 
-Nota: Al momento de generar el archivo en HTML, se tiene que comentar el código para calcular el "variance Inflation Factor", de no ser así no permite la generación del archivo. 
+Nota: Al momento de generar el archivo en HTML, se tiene que comentar el código para calcular el "variance Inflation Factor", de no ser así no permite la generación del archivo.
 
-2. Separe aleatoriamente (pero guarde la semilla) su conjunto de datos en dos partes.
+2.  Separe aleatoriamente (pero guarde la semilla) su conjunto de datos en dos partes.
 
 Dividir los df
 
@@ -45,7 +54,7 @@ df_entrenamiento <- df[indices, ]
 df_prueba <- df[-indices, ]
 ```
 
-3. Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadrático medio (ECM) mediante validación externa. Utilice el método de validación externa que considere más apropiado.
+3.  Usando los 1000 datos de entrenamiento, determine los valores de λr y λl de regesión ridge y lasso, respectivamente, que minimicen el error cuadrático medio (ECM) mediante validación externa. Utilice el método de validación externa que considere más apropiado.
 
 ```{r lambda, include=TRUE}
 # Determinar λr y λl
@@ -59,7 +68,7 @@ lambda_r
 lambda_l
 ```
 
-4. Ajuste la regresión ridge y lasso con los valores estimados de λr y λl obtenidos en (3) usando los 1000 datos de entrenamiento.
+4.  Ajuste la regresión ridge y lasso con los valores estimados de λr y λl obtenidos en (3) usando los 1000 datos de entrenamiento.
 
 ```{r modelo_lasso, include=TRUE}
 # Ajustar los modelos
@@ -67,7 +76,7 @@ modelo_ridge <- glmnet(x, y, alpha = 0, lambda = lambda_r)
 modelo_lasso <- glmnet(x, y, alpha = 1, lambda = lambda_l)
 ```
 
-5. Para los modelos ajustados en (4) determine el más apropiado para propósitos de predicción. Considere unicamente el ECM en los 200 datos de prueba para su decisión. Seleccionar el mejor modelo
+5.  Para los modelos ajustados en (4) determine el más apropiado para propósitos de predicción. Considere unicamente el ECM en los 200 datos de prueba para su decisión. Seleccionar el mejor modelo
 
 ```{r ajuste, include=TRUE}
 x_prueba <- model.matrix(y ~ ., data = df_prueba)[,-1]
@@ -80,7 +89,7 @@ mejor_modelo <- ifelse(ECM_ridge < ECM_lasso, "Ridge", "Lasso")
 print(mejor_modelo)
 ```
 
-6. Ajuste el modelo seleccionado en (5) para los 1200 datos. Note que en este punto ya tiene un λ estimado y un modelo seleccionado.
+6.  Ajuste el modelo seleccionado en (5) para los 1200 datos. Note que en este punto ya tiene un λ estimado y un modelo seleccionado.
 
 ```{r modelo_datos, include=TRUE}
 #Ajustar el modelo seleccionado a todos los df
@@ -101,7 +110,7 @@ plot(modelo_final, xvar = "lambda", label = TRUE)
 
 ```
 
-### Resumen de los resultados 
+### Resumen de los resultados
 
 ```{r resultados, include=TRUE}
 # Resumen de los resultados
